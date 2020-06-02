@@ -1,9 +1,9 @@
 import express from 'express'
 
-const app = express();
+import routes from './routes'
 
-app.get('/users', (req, res) => {
-   res.json([{}]);
-});
+const app = express();
+app.use(express.json());
+app.use(routes);
 
 app.listen(3333, () => console.log('server is running!'));
