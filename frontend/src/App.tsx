@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
 
-function App() {
+import Routes from './routes'
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <h1>Ecoleta</h1>
+    <div>
+      <Routes />
     </div>
   );
 }
