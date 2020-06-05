@@ -1,35 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Feather as Icon } from '@expo/vector-icons'
-import { View, ImageBackground, Image, StyleSheet, Text } from 'react-native'
+import { View, ImageBackground, Image, StyleSheet, Text, KeyboardAvoidingView, Platform, TextInput } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 
 const Home = () => {
   const navigation = useNavigation();
+  const [uf, setUf] = useState('');
+  const [city, setCity] = useState('');
 
   function handleNavigateToPoints() {
-    navigation.navigate('Points');
+    navigation.navigate('Points', {
+      uf,
+      city,
+    });
   }
 
    return (
-      <ImageBackground source={require('../../assets/home-background.png')} imageStyle={{ width: 274, height: 368 }} style={styles.container}>
-         <View style={styles.main}>
-            <Image source={require('../../assets/logo.png')} />
-            <Text style={styles.title} >Seu market place de coletas de resíduos.</Text>
-            <Text style={styles.description} >Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente.</Text>
-         </View>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <ImageBackground source={require('../../assets/home-background.png')} imageStyle={{ width: 274, height: 368 }} style={styles.container}>
+          <View style={styles.main}>
+              <Image source={require('../../assets/logo.png')} />
+              <View>
+                <Text style={styles.title} >Seu market place de coletas de resíduos.</Text>
+                <Text style={styles.description} >Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente.</Text>
+              </View>
+          </View>
 
-         <View style={styles.footer}>
+          <View style={styles.footer}>
+
+            <TextInput style={styles.input} placeholder="Digite a UF" value={uf} onChangeText={setUf} maxLength={2} autoCapitalize="characters" autoCorrect={false} />
+            <TextInput style={styles.input} placeholder="Digite a cidade" value={city} onChangeText={setCity} autoCorrect={false} />
+
             <RectButton style={styles.button} onPress={handleNavigateToPoints}>
-               <View style={styles.buttonIcon}>
+              <View style={styles.buttonIcon}>
                   <Text>
-                     <Icon name="arrow-right" color="#fff" size={24}/>
+                    <Icon name="arrow-right" color="#fff" size={24}/>
                   </Text>
-               </View>
-               <Text style={styles.buttonText}>Entrar</Text>
+              </View>
+              <Text style={styles.buttonText}>Entrar</Text>
             </RectButton>
-         </View>
-      </ImageBackground>
+          </View>
+        </ImageBackground>
+      </KeyboardAvoidingView>
    );
 }
 
